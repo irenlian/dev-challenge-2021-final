@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 export const PORT = process.env.PORT || 8080;
-export const PGHOST = process.env.PGHOST || 'localhost';
-export const PGPORT = process.env.PGPORT ? parseInt(process.env.PGPORT, 10) : 5432;
-export const PGUSER = process.env.PGUSER || 'postgres';
-export const PGPASSWORD = process.env.PGPASSWORD || 'postgres';
-export const PGDATABASE = process.env.PGDATABASE || 'postgres';
+export const DB_HOST = process.env.DB_HOST || 'localhost';
+export const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 27017;
+export const DB_USER = process.env.DB_USER || 'admin';
+export const DB_PASSWORD = process.env.DB_PASSWORD || '123456';
+export const DB_NAME = process.env.DB_NAME || 'root';

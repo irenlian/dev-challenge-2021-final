@@ -1,26 +1,20 @@
-import { Client } from 'pg';
-import { PGDATABASE, PGHOST, PGPASSWORD, PGPORT, PGUSER } from '../config';
-// pools will use environment variables
-// for connection information
+import mongoose from 'mongoose';
+import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from '../config';
 
-const dbClient = new Client({
-    user: PGUSER,
-    host: PGHOST,
-    database: PGDATABASE,
-    password: PGPASSWORD,
-    port: PGPORT,
-});
-export const initDb = () => {
-    dbClient.connect();
-}
+const url = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`;
 
+const options = {
+    useNewUrlParser: true,
+    connectTimeoutMS: 10000,
+};
 
-// export const query = async (query: string) => {
-//     try {
-//         return await client.query(query);
-//     } catch (e) {
-//         console.log(e);
-//     }
-// }
+export const initDb = async () => {
+    try {
+        await mongoose.connect(url, options);
+        console.log('MongoDB is connected');
+    } catch (err) {
+        console.log(err);
+    }
+};
 
-export default dbClient;
+export default mongoose;

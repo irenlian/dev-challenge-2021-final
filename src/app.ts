@@ -15,7 +15,6 @@ routes(app);
 
 process.on('SIGTERM', () => {
     console.info('SIGTERM signal received: closing HTTP server');
-    dbClient.end();
 });
 
 export default app;

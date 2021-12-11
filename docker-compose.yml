@@ -3,28 +3,22 @@ services:
     apiCreator:
         build: .
         environment:
-            ENVIRONMENT=production
-            PGHOST: pg
-            PGPORT: 3211
-            PGUSER: ${DB_USER}
-            PGPASSWORD: ${DB_PASSWORD}
-            PGDATABASE: ${DB_NAME}
+            - DB_USER=admin
+            - DB_PASSWORD=123456
         ports:
             - 8080:8080
         volumes:
-          # Don't mount the local copy of node_modules, for compatibility reasons
-          - /node_modules
+            - ./:/code
         depends_on:
-          - pg
-    pg:
-      image: postgres:11.9
-      ports:
-        - '5432:5432'
-      volumes:
-        - ./postgres-data:/var/lib/postgresql/data
-        # copy the sql script to create tables
-        - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      environment:
-        POSTGRES_DB: ${DB_NAME}
-        POSTGRES_USER: ${DB_USER}
-        POSTGRES_PASSWORD: ${DB_PASSWORD}
+            - mongo
+    mongo:
+        image: mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=123456
+        ports:
+            - 27017:27017
+        volumes:
+            - mongodb:/data/db
+volumes:
+    mongodb:
