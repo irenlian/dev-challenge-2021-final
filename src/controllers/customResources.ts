@@ -2,21 +2,7 @@ import Koa from 'koa';
 import { Schema } from 'mongoose';
 import db from '../lib/db';
 import { Models } from '../schemas';
-import { converter } from '../utils';
-
-const getModel = async (ctx: Koa.Context) => {
-    const name = ctx.params?.schema as string;
-    const saved = name && Models[name];
-    if (saved) return saved;
-    const resource = await Models.schemas.findOne({ name: ctx.params?.schema });
-    if (!resource) {
-        return null;
-    }
-    const schema = new Schema(converter(resource));
-    const newModel = db.model(resource.name, schema);
-    Models[name] = newModel;
-    return newModel;
-}
+import { converter, getModel } from '../utils';
 
 export const findCustom = async (ctx: Koa.Context) => {
     const model = await getModel(ctx);

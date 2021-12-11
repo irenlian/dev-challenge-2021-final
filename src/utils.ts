@@ -1,6 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 const Mixed = mongoose.Schema.Types.Mixed;
 import { SchemaDefinition } from 'mongoose';
+import Koa from 'koa';
+import { Models } from './schemas';
+import db from './lib/db';
 
 const getType = (type: string) => {
     if (type === 'string') {
@@ -26,3 +29,20 @@ export const converter = (data: any): SchemaDefinition<any> => {
         return acc;
     }, {});
 };
+
+export const getModel = async (ctx: Koa.Context) => {
+    const name = ctx.params?.schema as string;
+    const saved = name && Models[name];
+
+    const resource = await Models.schemas.findOne({ name: ctx.params?.schema });
+    if (!resource) {
+        return null;
+    }
+    if (saved) {
+        return saved;
+    }
+    const schema = new Schema(converter(resource));
+    const newModel = db.model(resource.name, schema);
+    Models[name] = newModel;
+    return newModel;
+}
