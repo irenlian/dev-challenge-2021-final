@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 const Mixed = mongoose.Schema.Types.Mixed;
 import { SchemaDefinition } from 'mongoose';
 import Koa from 'koa';
-import { Models } from './schemas';
+import { Models } from './models';
 import db from './lib/db';
 
 const getType = (type: string) => {

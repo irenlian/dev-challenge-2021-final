@@ -39,7 +39,8 @@ The core decisions:
 
 The possible improvements:
 - Handle more edge cases for the schemas creations
-- Support PUT and DELETE for custom schemas
+- Add more tests
+- Store schema versions
 
 ## API
 

@@ -1,8 +1,8 @@
 import Koa from 'koa';
 import db from '../lib/db';
-import { Models } from '../schemas';
-import { SchemaModel } from '../schemas/schema';
-import { FieldModel } from '../schemas/field';
+import { Models } from '../models';
+import { SchemaModel } from '../models/schema';
+import { FieldModel } from '../models/field';
 import { getModel } from '../utils';
 
 export const status = async (ctx: Koa.Context) => {
@@ -18,10 +18,10 @@ export const create = async (ctx: Koa.Context) => {
         return;
     }
     const body = ctx.request.body;
-    console.log(body.schema);
+    console.log(body?.schema);
     const schemaInput = {
-        name: body.schema || '',
-        fields: body.fields.map((f: any) => new Models.fields(f) as FieldModel),
+        name: body?.schema || '',
+        fields: body?.fields?.map((f: any) => new Models.fields(f) as FieldModel),
     } as SchemaModel;
     const schema: SchemaModel = new Models.schemas(schemaInput);
     await schema.save();
