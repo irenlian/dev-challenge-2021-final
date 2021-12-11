@@ -16,6 +16,7 @@
     "dev": "nodemon"
   },
   "jest": {
+    "testEnvironment": "node",
     "preset": "ts-jest",
     "transform": {
       "^.+\\.(t|j)sx?$": "ts-jest"
@@ -23,7 +24,8 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**/*{ts|tsx}"
     ],
-    "testRegex": "/__tests__/.*\\.(ts|tsx)$"
+    "testRegex": "/__tests__/.*\\.(ts|tsx)$",
+    "setupFilesAfterEnv": ["<rootDir>src/setupTests.ts"]
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"

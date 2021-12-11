@@ -1,9 +1,22 @@
 version: '2'
 services:
-    boxcutter:
-        build: .
-        environment:
-            - ENVIRONMENT=production
-        ports:
-            - 8080:8080
-        command: ["npm", "run", "test"]
+  apicreator:
+    build: .
+    environment:
+      - DB_HOST=mongo
+      - DB_USER=admin
+      - DB_PASSWORD=123456
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/code
+    depends_on:
+      - mongo
+    command: [ "npm", "run", "test" ]
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+    ports:
+      - 27017:27017

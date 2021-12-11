@@ -11,6 +11,12 @@ export const status = async (ctx: Koa.Context) => {
 };
 
 export const create = async (ctx: Koa.Context) => {
+    const { model } = await getModel(ctx);
+    if (model) {
+        ctx.status = 422;
+        ctx.body = 'This schema already exists';
+        return;
+    }
     const body = ctx.request.body;
     console.log(body.schema);
     const schemaInput = {
