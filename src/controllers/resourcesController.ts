@@ -18,7 +18,6 @@ export const create = async (ctx: Koa.Context) => {
         return;
     }
     const body = ctx.request.body;
-    console.log(body?.schema);
     const schemaInput = {
         name: body?.schema || '',
         fields: body?.fields?.map((f: any) => new Models.fields(f) as FieldModel),

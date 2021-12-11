@@ -33,7 +33,7 @@ const validate = (schema: Models.Validate.ValidateSchema = {}): Koa.Middleware =
             422,
             JSON.stringify({
                 success: false,
-                error: err,
+                error: err.message,
             }),
         );
     }

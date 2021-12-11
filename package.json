@@ -1,7 +1,7 @@
 {
-  "name": "CNC-program",
+  "name": "api-creator",
   "version": "1.0.0",
-  "description": "CNC-program for paper box cutting",
+  "description": "API creator",
   "main": "dist/index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
@@ -32,10 +32,6 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "bugs": {
-    "url": "https://github.com/irenlian/dev-challenge-2021/issues"
-  },
-  "homepage": "https://github.com/irenlian/dev-challenge-2021",
   "dependencies": {
     "axios": "^0.21.4",
     "dotenv": "^10.0.0",
