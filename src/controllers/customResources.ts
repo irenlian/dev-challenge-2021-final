@@ -5,12 +5,24 @@ import { Models } from '../schemas';
 import { converter, getModel } from '../utils';
 
 export const findCustom = async (ctx: Koa.Context) => {
-    const model = await getModel(ctx);
+    const { model, resource } = await getModel(ctx);
     if (!model) {
         ctx.status = 404;
         return;
     }
-    const data = await model.find({});
+    const queryable = resource.fields.filter((f: any) => f.queryable).map((f: any) => f.name);
+    const { limit, offset, ...filter } = ctx.query;
+    const wrongQuery = Object.keys(filter).filter((f: any) => !queryable.includes(f));
+    if (wrongQuery.length) {
+        ctx.status = 422;
+        ctx.body = `Next query variables are unavailable: ${wrongQuery}`;
+        return;
+    }
+    const options = {
+        ...(limit ? { limit: parseInt(limit as string, 10) } : {}),
+        ...(offset ? { skip: parseInt(offset as string, 10) } : {}),
+    };
+    const data = await model.find(filter || {}, null, options);
 
     ctx.status = 200;
     ctx.body = data.map((el: any) => {
@@ -23,12 +35,13 @@ export const findCustom = async (ctx: Koa.Context) => {
 export const findOneCustom = async (ctx: Koa.Context) => {
     const id = ctx.params?.id as string;
     console.log(id);
-    const model = await getModel(ctx);
+    const { model } = await getModel(ctx);
     if (!model || !id) {
         console.log(model);
         ctx.status = 404;
         return;
     }
+
     const data = await model.findById(id);
     const { _id, __v, ...copy } = data._doc;
     copy.id = _id;
@@ -38,7 +51,7 @@ export const findOneCustom = async (ctx: Koa.Context) => {
 };
 
 export const createCustom = async (ctx: Koa.Context) => {
-    const model = await getModel(ctx);
+    const { model } = await getModel(ctx);
     if (!model) {
         ctx.status = 404;
         return;

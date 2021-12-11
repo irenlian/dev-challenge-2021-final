@@ -36,13 +36,13 @@ export const getModel = async (ctx: Koa.Context) => {
 
     const resource = await Models.schemas.findOne({ name: ctx.params?.schema });
     if (!resource) {
-        return null;
+        return {};
     }
     if (saved) {
-        return saved;
+        return { model: saved, resource };
     }
     const schema = new Schema(converter(resource));
     const newModel = db.model(resource.name, schema);
     Models[name] = newModel;
-    return newModel;
-}
+    return { model: newModel, resource };
+};

@@ -34,7 +34,7 @@ export const find = async (ctx: Koa.Context) => {
 };
 
 export const deleteResource = async (ctx: Koa.Context) => {
-    const model = await getModel(ctx);
+    const { model } = await getModel(ctx);
     if (!model) {
         ctx.status = 404;
         return;
@@ -47,7 +47,7 @@ export const deleteResource = async (ctx: Koa.Context) => {
 };
 
 export const updateResource = async (ctx: Koa.Context) => {
-    const model = await getModel(ctx);
+    const { model } = await getModel(ctx);
     if (!model) {
         ctx.status = 404;
         return;
