@@ -7,6 +7,8 @@ export type FieldModel = Document & {
     type: string;
     required?: boolean;
     default?: any;
+    queryable?: boolean,
+    readonly?: boolean,
 };
 export const FieldSchema = new Schema({
     name: {
@@ -25,5 +27,11 @@ export const FieldSchema = new Schema({
     default: {
         type: Mixed,
         required: false
+    },
+    queryable: {
+        type: Boolean,
+    },
+    readonly: {
+        type: Boolean,
     },
 });

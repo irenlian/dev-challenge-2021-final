@@ -8,7 +8,8 @@ export type SchemaModel = Document & {
 export const SchemaSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     fields: [FieldSchema],
 });
