@@ -5,7 +5,7 @@ export default async (ctx: Koa.Context, next: Function): Promise<void> => {
         await next();
     } catch (error) {
         const { statusCode, message = 'Unknown error' } = error || {};
-        const code = statusCode || error.status || 500;
+        const code = statusCode || error.status || 422;
 
         ctx.status = code;
         try {

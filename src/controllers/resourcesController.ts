@@ -17,13 +17,17 @@ export const create = async (ctx: Koa.Context) => {
         fields: body.fields.map((f: any) => new Models.fields(f) as FieldModel),
     } as SchemaModel;
     const schema: SchemaModel = new Models.schemas(schemaInput);
-    const res = await schema.save();
-    ctx.status = 200;
+    await schema.save();
+    ctx.status = 201;
 };
 
 export const find = async (ctx: Koa.Context) => {
-    const input = ctx.request.body as _FilterQuery<SchemaModel>;
     const resource = await Models.schemas.find({});
     ctx.status = 200;
-    ctx.body = resource;
+    ctx.body = {
+        resources: resource.map((r: any) => ({
+            schema: r.name,
+            endpoint: `/api/v1/${r.name}`,
+        })),
+    };
 };

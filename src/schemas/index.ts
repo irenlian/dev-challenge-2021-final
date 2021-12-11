@@ -3,7 +3,7 @@ import { ResourceModel, ResourceSchema } from './resource';
 import { SchemaModel, SchemaSchema } from './schema';
 import { FieldModel, FieldSchema } from './field';
 
-export const Models = {
+export const Models: Record<string, any> = {
     resources: db.model<ResourceModel>('Resource', ResourceSchema),
     schemas: db.model<SchemaModel>('Schema', SchemaSchema),
     fields: db.model<FieldModel>('Field', FieldSchema),
