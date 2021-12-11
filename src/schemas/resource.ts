@@ -1,24 +1,12 @@
 import { Document, Schema } from 'mongoose';
+import { SchemaModel, SchemaSchema } from './schema';
 
 export type ResourceModel = Document & {
-    id: string;
-    name: string;
-    schema_id: string;
+    schema: SchemaModel,
     endpoint: string;
 };
 export const ResourceSchema = new Schema({
-    id: {
-        type: String,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    schema_id: {
-        type: String,
-        required: true
-    },
+    schema: SchemaSchema,
     endpoint: {
         type: String,
         required: true

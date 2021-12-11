@@ -3,7 +3,7 @@ import body from 'koa-bodyparser';
 
 import errorHandling from './middleware/errorHandling';
 import routes from './routes';
-import dbClient, { initDb } from './lib/db';
+import { initDb } from './lib/db';
 
 initDb();
 
