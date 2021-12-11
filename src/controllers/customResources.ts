@@ -31,10 +31,8 @@ export const findCustom = async (ctx: Koa.Context) => {
 
 export const findOneCustom = async (ctx: Koa.Context) => {
     const id = ctx.params?.id as string;
-    console.log(id);
     const { model } = await getModel(ctx);
     if (!model || !id) {
-        console.log(model);
         ctx.status = 404;
         return;
     }
@@ -48,16 +46,37 @@ export const findOneCustom = async (ctx: Koa.Context) => {
 };
 
 export const createCustom = async (ctx: Koa.Context) => {
-    const { model } = await getModel(ctx);
+    const { model, resource } = await getModel(ctx);
     if (!model) {
         ctx.status = 404;
         return;
     }
+
+    const uniqueValues = resource.fields.reduce((acc: any, f: any) => {
+        if (f.unique && ctx.request.body[f.name]) {
+            acc[f.name] = ctx.request.body[f.name];
+        }
+        return acc;
+    }, {});
+    if (Object.keys(uniqueValues).length) {
+        const existed = await model.findOne(uniqueValues);
+        if (existed) {
+            ctx.status = 422;
+            ctx.body = 'Already exists';
+            return;
+        }
+    }
+
     const instance = new model(ctx.request.body);
     const res = await instance.save();
+    const { _id, __v, ...copy } = res._doc;
+    copy.id = _id;
+    const name = ctx.params?.schema as string;
 
-    ctx.status = 200;
-    ctx.body = res;
+    ctx.status = 201;
+    ctx.body = {
+        [name.slice(0, name.lastIndexOf('s'))]: copy,
+    };
 };
 
 export const updateCustom = async (ctx: Koa.Context) => {

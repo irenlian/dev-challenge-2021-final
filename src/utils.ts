@@ -41,6 +41,7 @@ export const getModel = async (ctx: Koa.Context) => {
     if (saved) {
         return { model: saved, resource };
     }
+    // console.log(resource.fields);
     const schema = new Schema(converter(resource));
     const newModel = db.model(resource.name, schema);
     Models[name] = newModel;

@@ -22,6 +22,8 @@ export const create = async (ctx: Koa.Context) => {
         name: body?.schema || '',
         fields: body?.fields?.map((f: any) => new Models.fields(f) as FieldModel),
     } as SchemaModel;
+
+    // console.log(schemaInput.fields);
     const schema: SchemaModel = new Models.schemas(schemaInput);
     await schema.save();
     ctx.status = 201;
@@ -61,12 +63,10 @@ export const updateResource = async (ctx: Koa.Context) => {
     db.deleteModel(name);
     delete Models[name];
     const body = ctx.request.body;
-    console.log(body.schema);
     const schemaInput = {
         name: ctx.params?.schema,
         fields: body.fields.map((f: any) => new Models.fields(f) as FieldModel),
     } as SchemaModel;
     const res = await Models.schemas.update({ name }, schemaInput);
-    console.log(res);
     ctx.status = 200;
 };

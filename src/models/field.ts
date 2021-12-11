@@ -9,6 +9,7 @@ export type FieldModel = Document & {
     default?: any;
     queryable?: boolean,
     readonly?: boolean,
+    unique?: boolean,
 };
 export const FieldSchema = new Schema({
     name: {
@@ -32,6 +33,9 @@ export const FieldSchema = new Schema({
         type: Boolean,
     },
     readonly: {
+        type: Boolean,
+    },
+    unique: {
         type: Boolean,
     },
 });

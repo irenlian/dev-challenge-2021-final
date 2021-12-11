@@ -10,7 +10,6 @@ const options = {
 
 export const initDb = async () => {
     try {
-        console.log(url);
         await mongoose.connect(url, options);
         console.log('MongoDB is connected');
     } catch (err) {
