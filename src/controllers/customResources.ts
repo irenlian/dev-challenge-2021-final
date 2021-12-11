@@ -1,8 +1,5 @@
 import Koa from 'koa';
-import { Schema } from 'mongoose';
-import db from '../lib/db';
-import { Models } from '../schemas';
-import { converter, getModel } from '../utils';
+import { getModel } from '../utils';
 
 export const findCustom = async (ctx: Koa.Context) => {
     const { model, resource } = await getModel(ctx);
@@ -61,4 +58,43 @@ export const createCustom = async (ctx: Koa.Context) => {
 
     ctx.status = 200;
     ctx.body = res;
+};
+
+export const updateCustom = async (ctx: Koa.Context) => {
+    const id = ctx.params?.id as string;
+    const { model, resource } = await getModel(ctx);
+    if (!model || !id) {
+        ctx.status = 404;
+        return;
+    }
+    const readOnly = resource.fields.filter((f: any) => f.readonly).map((f: any) => f.name);
+    const wrongFields = Object.keys(ctx.request.body as any).filter((f: any) => readOnly.includes(f));
+    if (wrongFields.length) {
+        ctx.status = 422;
+        ctx.body = `These fields are readonly: ${wrongFields}`;
+        return;
+    }
+    const data = await model.updateOne({ _id: id }, ctx.request.body);
+    if (data.matchedCount) {
+        ctx.status = 200;
+    } else {
+        ctx.status = 422;
+        ctx.body = 'Did not found';
+    }
+};
+
+export const deleteCustom = async (ctx: Koa.Context) => {
+    const id = ctx.params?.id as string;
+    const { model } = await getModel(ctx);
+    if (!model || !id) {
+        ctx.status = 404;
+        return;
+    }
+    const res = await model.deleteOne({ _id: id });
+    if (res.deletedCount) {
+        ctx.status = 204;
+    } else {
+        ctx.status = 422;
+        ctx.body = 'Did not found';
+    }
 };

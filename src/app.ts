@@ -2,6 +2,7 @@ import Koa from 'koa';
 import body from 'koa-bodyparser';
 
 import errorHandling from './middleware/errorHandling';
+import withCache from './middleware/withCache';
 import routes from './routes';
 import { initDb } from './lib/db';
 
@@ -11,6 +12,7 @@ const app: Koa = new Koa();
 app.use(body());
 
 app.use(errorHandling);
+// app.use(withCache);
 routes(app);
 
 process.on('SIGTERM', () => {
