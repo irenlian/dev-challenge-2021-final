@@ -6,7 +6,7 @@ This task had been completed offline during 8 hours of coding. All the commits h
 
 In a nutshell, the task was to write some sort of Firebase in 8 hours using any technologies and wrap it in Docker image with persistence layer.
 
-[The detailed description of the task](task/BackendFinalDEVChallengeXVIII.html).
+[The detailed description of the task](task/BackendFinalDEVChallengeXVIII.md).
 
 The task from the previous online round: https://github.com/irenlian/dev-challenge-2021
 
