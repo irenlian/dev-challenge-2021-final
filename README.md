@@ -25,6 +25,9 @@ The criteria:
 - Error messages for the enormous amount of edge cases
 - Highload and concurrency
 
+The table of the results (my id is 7070):
+![table](task/images/results.png)
+
 ## How to run the service
 
 To start the service in the Docker:
