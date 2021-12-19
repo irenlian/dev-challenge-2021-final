@@ -1,6 +1,29 @@
 # dev-challenge-2021
 
-Backend task for final of devchallenge.it in 2021.
+Backend task for final of the engineering contest https://devchallenge.it/ in 2021.
+
+This task had been completed offline during 8 hours of coding. All the commits have been pushed in real-time during the coding process.
+
+In a nutshell, the task was to write some sort of Firebase in 8 hours using any technologies and wrap it in Docker image with persistence layer.
+
+[The detailed description of the task](task/BackendFinalDEVChallengeXVIII.html).
+
+The task from the previous online round: https://github.com/irenlian/dev-challenge-2021
+
+# Winner
+
+According to the judges and automated tests, I took the first place among 19 finalists 
+who used different programming languages from allover Ukraine in the Backend Hard nomination.
+
+![Winner photo](task/images/photo.jpeg)
+
+The criteria:
+- Implementation of the task
+- Code style and structure
+- Test coverage
+- Reliability and stability of solution
+- Error messages for the enormous amount of edge cases
+- Highload and concurrency
 
 ## How to run the service
 
